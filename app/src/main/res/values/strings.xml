@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Android Project</string>
+    <string name="ok">OK</string>
+    <string name="breweries_error">Brouwerijen ophalen mislukt. Probeer opnieuw.</string>
+    <string name="breweries_no_breweries">Er zijn geen brouwerijen.</string>
+    <string name="title_breweries">Brouwerijen</string>
+    <string name="loading_screen">%s laden</string>
+    <string name="title_random_breweries">Random</string>
+    <string name="test_menuscaffold">MenuScaffold</string>
+    <string name="title_metadata">Statistieken</string>
 </resources>
