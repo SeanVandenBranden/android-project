@@ -5,19 +5,25 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.androidproject.local.breweries.BreweryRepository
 import com.example.androidproject.model.breweries.Brewery
 import com.example.androidproject.ui.common.UIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class BreweriesOverviewViewModel @Inject constructor() : ViewModel() {
+class BreweriesOverviewViewModel @Inject constructor(
+    private val breweryRepository: BreweryRepository,
+) : ViewModel() {
     private val _uiState = MutableStateFlow(BreweriesOverviewState(false, null))
     val uiState: StateFlow<BreweriesOverviewState> = _uiState.asStateFlow()
 
@@ -35,18 +41,20 @@ class BreweriesOverviewViewModel @Inject constructor() : ViewModel() {
     }
 
     private fun loadBreweries() {
-        val breweries = listOf( // TODO this is just to quicklly test the listview, this should be deleted once api calls are implemented  (api should be used instead)
-            Brewery("154b16e1-ac3b-4bff-a11f-f7ae9ddc27e0", "MadTree Brewing 2.0", "regional", "5164 Kennedy Ave", null, null, "Cincinnati", "Ohio", "45213", "United States", "-84.4137736", "39.1885752", "5138368733", "http://www.madtreebrewing.com", "Ohio", "5164 Kennedy Ave"),
-            Brewery("254b16e1-ac3b-4bff-a11f-f7ae9ddc27e0", "MadTree Brewing 2.0", "regional", "5164 Kennedy Ave", null, null, "Cincinnati", "Ohio", "45213", "United States", "-84.4137736", "39.1885752", "5138368733", "http://www.madtreebrewing.com", "Ohio", "5164 Kennedy Ave"),
-            Brewery("354b16e1-ac3b-4bff-a11f-f7ae9ddc27e0", "MadTree Brewing 2.0", "regional", "5164 Kennedy Ave", null, null, "Cincinnati", "Ohio", "45213", "United States", "-84.4137736", "39.1885752", "5138368733", "http://www.madtreebrewing.com", "Ohio", "5164 Kennedy Ave"),
-        )
-        viewModelScope.launch {
+        viewModelScope.launch() {
             // TODO get breweries here
-            kotlinx.coroutines.delay(1000) // TODO delay to simulate loading time, should be removed when not in development
-            breweryApiState = UIState.Success(breweries)
-            _uiState.update {
-                it.copy(breweries = breweries) // TODO
-            }
+            breweryRepository
+                .getAll()
+                .catch { exception ->
+                    breweryApiState = UIState.Error(exception.message)
+                    exception.printStackTrace()
+                }
+                .collect { breweries ->
+                    breweryApiState = UIState.Success(breweries)
+                    _uiState.update {
+                        it.copy(breweries = breweries)
+                    }
+                }
         }
     }
 
@@ -68,20 +76,15 @@ class BreweriesOverviewViewModel @Inject constructor() : ViewModel() {
                 it.copy(isRefreshing = true)
             }
         }
-        val breweries = listOf( // TODO this is just to quicklly test the listview, this should be deleted once api calls are implemented  (api should be used instead)
-            Brewery("154b16e1-ac3b-4bff-a11f-f7ae9ddc27e0", "MadTree Brewing 2.0", "regional", "5164 Kennedy Ave", null, null, "Cincinnati", "Ohio", "45213", "United States", "-84.4137736", "39.1885752", "5138368733", "http://www.madtreebrewing.com", "Ohio", "5164 Kennedy Ave"),
-            Brewery("254b16e1-ac3b-4bff-a11f-f7ae9ddc27e0", "MadTree Brewing 2.0", "regional", "5164 Kennedy Ave", null, null, "Cincinnati", "Ohio", "45213", "United States", "-84.4137736", "39.1885752", "5138368733", "http://www.madtreebrewing.com", "Ohio", "5164 Kennedy Ave"),
-            Brewery("354b16e1-ac3b-4bff-a11f-f7ae9ddc27e0", "MadTree Brewing 2.0", "regional", "5164 Kennedy Ave", null, null, "Cincinnati", "Ohio", "45213", "United States", "-84.4137736", "39.1885752", "5138368733", "http://www.madtreebrewing.com", "Ohio", "5164 Kennedy Ave"),
-        )
-        viewModelScope.launch(exceptionHandler) {
-            // TODO get breweries here
-            kotlinx.coroutines.delay(1000) // TODO delay to simulate loading time, should be removed when not in development
-            breweryApiState = UIState.Success(breweries)
-            _uiState.update {
-                it.copy(breweries = breweries) // TODO
+        viewModelScope.launch() {
+            val refreshBreweriesDeferred = async { breweryRepository.refreshBreweries() }
+            try {
+                awaitAll(refreshBreweriesDeferred)
             }
-            _uiState.update {
-                it.copy(isRefreshing = false)
+            finally {
+                _uiState.update {
+                    it.copy(isRefreshing = false)
+                }
             }
         }
     }

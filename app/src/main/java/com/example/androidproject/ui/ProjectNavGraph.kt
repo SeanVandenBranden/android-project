@@ -3,10 +3,16 @@ package com.example.androidproject.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.example.androidproject.ui.ProjectDestinations.BREWERIES_METADATA_ROUTE
 import com.example.androidproject.ui.ProjectDestinations.BREWERIES_ROUTE
+import com.example.androidproject.ui.ProjectDestinations.BREWERY_DETAIL_ROUTE
+import com.example.androidproject.ui.ProjectDestinations.RANDOM_BREWERY_ROUTE
+import com.example.androidproject.ui.ProjectDestinationsArgs.BREWERY_ID_ARG
 import com.example.androidproject.ui.screens.breweriesoverview.BreweriesOverviewScreen
 
 @Composable
@@ -36,8 +42,8 @@ fun AdminAppNavGraph(
                 topAppbarTitle = "",//TODO brewery name here
                 onBack = navActions::navigateToBreweriesWithReload,
             )
-        }
-        composable(RANDOM_BREWERY_ROUTE) {
+        }*/
+        /*composable(RANDOM_BREWERY_ROUTE) {
             RandomBreweryScreen()//TODO make this screen
         }
         composable(BREWERIES_METADATA_ROUTE) {

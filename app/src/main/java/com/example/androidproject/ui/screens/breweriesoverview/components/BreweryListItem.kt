@@ -38,10 +38,12 @@ fun BreweryListItem(
                         brewery.name,
                         style = MaterialTheme.typography.titleLarge,
                     )
-                    Text(
-                        brewery.address1,
-                        style = MaterialTheme.typography.bodyMedium,
-                    )
+                    if(!brewery.address1.isNullOrEmpty()){
+                        Text(
+                            brewery.address1,
+                            style = MaterialTheme.typography.bodyMedium,
+                        )
+                    }
                     if (!brewery.address2.isNullOrEmpty()) {
                         Text(
                             brewery.address2,
@@ -55,13 +57,15 @@ fun BreweryListItem(
                         )
                     }
                     Text(
-                        "${brewery.city}, ${brewery.stateProvince} ${brewery.postalCode}",
+                        "${brewery.city ?: ""}, ${brewery.stateProvince?: ""} ${brewery.postalCode?: ""}",
                         style = MaterialTheme.typography.bodyMedium,
                     )
-                    Text(
-                        brewery.country,
-                        style = MaterialTheme.typography.bodyMedium,
-                    )
+                    if(!brewery.country.isNullOrEmpty()) {
+                        Text(
+                            brewery.country,
+                            style = MaterialTheme.typography.bodyMedium,
+                        )
+                    }
                 }
             },
         )
