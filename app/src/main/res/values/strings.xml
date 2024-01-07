@@ -10,4 +10,8 @@
     <string name="title_metadata">Statistieken</string>
     <string name="title_brewery">brouwerij</string>
     <string name="contentDescription_menu_back">back button</string>
+    <string name="brewery_type">Type brouwerij: %1\$s</string>
+    <string name="website_url">"Website: %1\$s"</string>
+    <string name="algemene_info">Algemene info</string>
+    <string name="locatie">Locatie</string>
 </resources>

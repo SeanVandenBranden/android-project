@@ -57,7 +57,7 @@ fun BreweryListItem(
                         )
                     }
                     Text(
-                        "${brewery.city ?: ""}, ${brewery.stateProvince?: ""} ${brewery.postalCode?: ""}",
+                        "${brewery.city ?: ""}, ${brewery.stateProvince?: brewery.state?: ""} ${brewery.postalCode?: ""}",
                         style = MaterialTheme.typography.bodyMedium,
                     )
                     if(!brewery.country.isNullOrEmpty()) {
