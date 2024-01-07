@@ -52,10 +52,10 @@ fun ProjectApp(
     )
 
     val breweryMetadataMenuItem = NavigationMenuItem(
-        route = ProjectDestinations.RANDOM_BREWERY_ROUTE,
+        route = ProjectDestinations.BREWERIES_METADATA_ROUTE,
         title = R.string.title_metadata,
         Icons.Outlined.Style,
-        navigationAction = { navActions.navigateToRandomBrewery() },
+        navigationAction = { navActions.navigateToBreweriesMetadata() },
     )
 
     val menuItems = arrayOf(breweriesMenuItem, randomBreweryMenuItem, breweryMetadataMenuItem)

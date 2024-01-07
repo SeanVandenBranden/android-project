@@ -14,4 +14,5 @@
     <string name="website_url">"Website: %1\$s"</string>
     <string name="algemene_info">Algemene info</string>
     <string name="locatie">Locatie</string>
+    <string name="metadata_error">Metadata ophalen misluukt. Probeer opnieuw.</string>
 </resources>

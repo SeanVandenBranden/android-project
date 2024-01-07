@@ -2,6 +2,7 @@ package com.example.androidproject.local.breweries
 
 import com.example.androidproject.api.BreweryApiService
 import com.example.androidproject.model.breweries.Brewery
+import com.example.androidproject.model.metadata.Metadata
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -29,6 +30,10 @@ interface BreweryRepository {
      * Refresh breweries from an external source.
      */
     suspend fun refreshBreweries()
+
+    suspend fun getRandom(): Brewery?
+
+    suspend fun getMetadata(): Metadata?
 }
 
 /**
@@ -67,5 +72,21 @@ class OfflineBreweryRepository(
             // Insert into database
             breweryDao.insertBreweries(dbBreweries)
         }
+    }
+
+    override suspend fun getRandom(): Brewery? {
+        var brewery: Brewery? = null;
+        coroutineScope {
+            brewery = breweryApiService.getRandom()[0]//return list with one item sadly
+        }
+        return brewery
+    }
+
+    override suspend fun getMetadata(): Metadata? {
+        var metadata: Metadata? = null;
+        coroutineScope {
+            metadata = breweryApiService.getMetadata()//return list with one item sadly
+        }
+        return metadata
     }
 }
