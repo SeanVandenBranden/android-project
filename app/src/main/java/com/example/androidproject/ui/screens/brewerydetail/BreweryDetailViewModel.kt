@@ -49,7 +49,8 @@ class BreweryDetailViewModel @Inject constructor(
                     )
                     _uiState.update {
                         it.copy(
-                            brewery = brewery
+                            brewery = brewery,
+                            name = brewery.name
                         )
                     }
                 }

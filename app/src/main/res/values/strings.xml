@@ -9,4 +9,5 @@
     <string name="test_menuscaffold">MenuScaffold</string>
     <string name="title_metadata">Statistieken</string>
     <string name="title_brewery">brouwerij</string>
+    <string name="contentDescription_menu_back">back button</string>
 </resources>

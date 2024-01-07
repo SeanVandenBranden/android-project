@@ -11,6 +11,7 @@ import androidx.navigation.navArgument
 import com.example.androidproject.ui.ProjectDestinations.BREWERIES_ROUTE
 import com.example.androidproject.ui.ProjectDestinations.BREWERY_DETAIL_ROUTE
 import com.example.androidproject.ui.ProjectDestinationsArgs.BREWERY_ID_ARG
+import com.example.androidproject.ui.ProjectDestinationsArgs.BREWERY_NAME_ARG
 import com.example.androidproject.ui.screens.breweriesoverview.BreweriesOverviewScreen
 import com.example.androidproject.ui.screens.brewerydetail.BreweryDetailScreen
 
@@ -32,10 +33,10 @@ fun ProjectAppNavGraph(
         composable(
             BREWERY_DETAIL_ROUTE,
             arguments = listOf(
-                navArgument(BREWERY_ID_ARG) { type = NavType.StringType },
+                navArgument(BREWERY_ID_ARG) { type = NavType.StringType }
             ),
         ) {
-            BreweryDetailScreen()
+            BreweryDetailScreen(onBack = navActions::navigateToBreweriesWithReload)
         }
         /*composable(RANDOM_BREWERY_ROUTE) {
             RandomBreweryScreen()//TODO make this screen

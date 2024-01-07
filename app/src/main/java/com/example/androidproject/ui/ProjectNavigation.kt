@@ -26,6 +26,7 @@ object ProjectScreens {
  */
 object ProjectDestinationsArgs {
     const val BREWERY_ID_ARG = "breweryId"
+    const val BREWERY_NAME_ARG = "breweryName"
 }
 
 /**
