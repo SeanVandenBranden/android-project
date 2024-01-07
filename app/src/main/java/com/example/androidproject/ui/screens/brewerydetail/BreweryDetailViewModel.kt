@@ -10,6 +10,7 @@ import com.example.androidproject.local.breweries.BreweryRepository
 import com.example.androidproject.model.breweries.Brewery
 import com.example.androidproject.ui.ProjectDestinationsArgs
 import com.example.androidproject.ui.common.UIState
+import com.google.firebase.firestore.GeoPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
