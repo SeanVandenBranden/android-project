@@ -44,5 +44,5 @@ interface BreweryDao {
      * @return A [Flow] of [DbBrewery] representing the Brewery.
      */
     @Query("SELECT * FROM Brewery WHERE id = :breweryId")
-    fun getBreweryById(breweryId: Int): Flow<DbBrewery>
+    fun getBreweryById(breweryId: String): Flow<DbBrewery>
 }

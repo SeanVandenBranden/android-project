@@ -23,7 +23,7 @@ interface BreweryRepository {
      * @param id The unique identifier of the brewery.
      * @return A Flow emitting a single [Brewery] object.
      */
-    fun getById(id: Int): Flow<Brewery>
+    fun getById(id: String): Flow<Brewery>
 
     /**
      * Refresh breweries from an external source.
@@ -45,7 +45,7 @@ class OfflineBreweryRepository(
         return breweryDao.getAllBreweries().map { dbBreweries -> dbBreweries.map { dbBrewery -> dbBrewery.toDomainObject() }}
     }
 
-    override fun getById(id: Int): Flow<Brewery> {
+    override fun getById(id: String): Flow<Brewery> {
         return breweryDao.getBreweryById(id).map { brewery ->
             brewery.toDomainObject()
         }

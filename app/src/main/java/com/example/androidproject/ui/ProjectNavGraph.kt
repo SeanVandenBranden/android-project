@@ -8,15 +8,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.androidproject.ui.ProjectDestinations.BREWERIES_METADATA_ROUTE
 import com.example.androidproject.ui.ProjectDestinations.BREWERIES_ROUTE
 import com.example.androidproject.ui.ProjectDestinations.BREWERY_DETAIL_ROUTE
-import com.example.androidproject.ui.ProjectDestinations.RANDOM_BREWERY_ROUTE
 import com.example.androidproject.ui.ProjectDestinationsArgs.BREWERY_ID_ARG
 import com.example.androidproject.ui.screens.breweriesoverview.BreweriesOverviewScreen
+import com.example.androidproject.ui.screens.brewerydetail.BreweryDetailScreen
 
 @Composable
-fun AdminAppNavGraph(
+fun ProjectAppNavGraph(
     navController: NavHostController = rememberNavController(),
     startDestination: String = BREWERIES_ROUTE,
     navActions: ProjectNavigationActions = remember(navController) {
@@ -28,21 +27,16 @@ fun AdminAppNavGraph(
         startDestination = startDestination,
     ) {
         composable(BREWERIES_ROUTE) {
-            // TODO make this screen
             BreweriesOverviewScreen(onViewDetailClicked = { brewery -> navActions.navigateToBreweryDetail(brewery.id) })
         }
-        /*composable(
+        composable(
             BREWERY_DETAIL_ROUTE,
             arguments = listOf(
-                navArgument(BREWERY_ID_ARG) { type = NavType.IntType },
+                navArgument(BREWERY_ID_ARG) { type = NavType.StringType },
             ),
-        ) { entry ->
-            val breweryId = entry.arguments?.getInt(BREWERY_ID_ARG)
-            BreweryDetailScreen(//TODO make this screen
-                topAppbarTitle = "",//TODO brewery name here
-                onBack = navActions::navigateToBreweriesWithReload,
-            )
-        }*/
+        ) {
+            BreweryDetailScreen()
+        }
         /*composable(RANDOM_BREWERY_ROUTE) {
             RandomBreweryScreen()//TODO make this screen
         }

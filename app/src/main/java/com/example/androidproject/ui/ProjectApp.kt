@@ -63,7 +63,7 @@ fun ProjectApp(
     val currentRoute = currentNavBackStackEntry?.destination?.route ?: startDestination
 
     MenuScaffold(currentRoute = currentRoute, menuItems = menuItems) {
-        AdminAppNavGraph(navController = navController)
+        ProjectAppNavGraph(navController = navController)
     }
 }
 
